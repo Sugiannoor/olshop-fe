@@ -2,7 +2,8 @@
 
 import App from "@/App";
 import { Login } from "@/features/auth/pages/Login";
-import { Checkout } from "@/features/cart/page/checkout";
+import { Checkout } from "@/features/cart/page/Checkout";
+import { Order } from "@/features/orders/page/Order";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { PageLayout } from "@/layouts/PageLayout";
 import { Suspense } from "react";
@@ -16,6 +17,7 @@ export const AppRoutes = () => {
         <Route element={<PageLayout />}>
           <Route path="/marketplace" element={<App />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order" element={<Order />} />
         </Route>
         <Route element={<AuthLayout />}>
           <Route path="/" element={<Login />} />

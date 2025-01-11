@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, Image, Text, Group, Badge } from "@mantine/core";
+import { Button, Card, Image, Group, Badge } from "@mantine/core";
 import { IconShoppingCart, IconCheck } from "@tabler/icons-react";
 
 interface Product {
