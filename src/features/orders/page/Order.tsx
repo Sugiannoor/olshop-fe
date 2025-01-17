@@ -1,4 +1,4 @@
-import { Card, Group, Badge, Divider } from "@mantine/core";
+import { Card, Group, Badge, Divider, Button } from "@mantine/core";
 
 interface OrderItem {
   id: number;
@@ -14,18 +14,21 @@ interface OrderData {
   total_price: number;
   status: string;
   created_at: string;
+  reff: string; // Reference untuk Duitku
+  qr_string?: string; // Optional QR String untuk QRIS
+  va_number?: string; // Optional Virtual Account Number
   items: OrderItem[];
 }
 
 export const Order = () => {
-  // Data dummy untuk beberapa pesanan
   const orders: OrderData[] = [
     {
       id: 1,
       address: "Jl. Kebon Jeruk No. 10, Jakarta",
-      payment_method: "Bank Transfer",
+      payment_method: "OV",
       total_price: 250000,
       status: "completed",
+      reff: "DXXXXCX80TXXX5Q70QCI",
       created_at: "2025-01-11T10:30:00",
       items: [
         { id: 1, name: "Produk A", quantity: 2, price: 50000 },
@@ -35,9 +38,10 @@ export const Order = () => {
     {
       id: 2,
       address: "Jl. Melati No. 20, Bandung",
-      payment_method: "Credit Card",
+      payment_method: "DA",
       total_price: 150000,
       status: "pending",
+      reff: "DXXXXXY80TXXX5Q70QCI",
       created_at: "2025-01-10T14:15:00",
       items: [
         { id: 1, name: "Produk C", quantity: 1, price: 100000 },
@@ -45,6 +49,11 @@ export const Order = () => {
       ],
     },
   ];
+
+  const handleDirectToPayment = (reff: string) => {
+    const paymentUrl = `https://sandbox.duitku.com/topup/topupdirectv2.aspx?ref=${reff}`;
+    window.location.href = paymentUrl;
+  };
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-gray-50 rounded shadow-md space-y-8">
@@ -99,6 +108,19 @@ export const Order = () => {
               </Group>
             ))}
           </Card>
+
+          {/* Tombol Bayar Sekarang */}
+          {order.status === "pending" && (
+            <Button
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan" }}
+              fullWidth
+              mt="lg"
+              onClick={() => handleDirectToPayment(order.reff)}
+            >
+              Bayar Sekarang
+            </Button>
+          )}
         </div>
       ))}
     </div>
